@@ -1,0 +1,78 @@
+{
+    "project": "Facial Emotion Recognition",
+    "model_architecture": "Custom CNN",
+    "input_shape": [
+        48,
+        48,
+        1
+    ],
+    "num_classes": 7,
+    "emotions": [
+        "angry",
+        "disgust",
+        "fear",
+        "happy",
+        "neutral",
+        "sad",
+        "surprise"
+    ],
+    "test_accuracy": 0.6646698244636389,
+    "macro_f1": 0.6372942263764888,
+    "weighted_f1": 0.65835663184149,
+    "total_parameters": 1209831,
+    "training_epochs_completed": 116,
+    "best_val_accuracy": 0.6646698117256165,
+    "class_weights": {
+        "0": 1.0266046844269623,
+        "1": 9.406618610747051,
+        "2": 1.0010460615781582,
+        "3": 0.5684387684387684,
+        "4": 0.8260394187886635,
+        "5": 0.8491274770777877,
+        "6": 1.293372978330405
+    },
+    "per_class_metrics": {
+        "angry": {
+            "precision": 0.5661764705882353,
+            "recall": 0.6430062630480167,
+            "f1-score": 0.6021505376344086,
+            "support": 958
+        },
+        "disgust": {
+            "precision": 0.5121951219512195,
+            "recall": 0.7567567567567568,
+            "f1-score": 0.610909090909091,
+            "support": 111
+        },
+        "fear": {
+            "precision": 0.5739130434782609,
+            "recall": 0.322265625,
+            "f1-score": 0.41275797373358347,
+            "support": 1024
+        },
+        "happy": {
+            "precision": 0.8877131099353321,
+            "recall": 0.8511837655016911,
+            "f1-score": 0.8690647482014389,
+            "support": 1774
+        },
+        "neutral": {
+            "precision": 0.5775401069518716,
+            "recall": 0.7007299270072993,
+            "f1-score": 0.633198973983144,
+            "support": 1233
+        },
+        "sad": {
+            "precision": 0.5509708737864077,
+            "recall": 0.5461106655974338,
+            "f1-score": 0.5485300040273863,
+            "support": 1247
+        },
+        "surprise": {
+            "precision": 0.7472766884531591,
+            "recall": 0.825511432009627,
+            "f1-score": 0.7844482561463694,
+            "support": 831
+        }
+    }
+}
