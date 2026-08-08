@@ -4,25 +4,18 @@
 
 import os
 import sys
+
+
 import cv2
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+
 import streamlit as st
 import plotly.express as px
 from PIL import Image
-
-# --- STRICT OPENCV CHECK ---
-# This will immediately catch the error if a local 'cv2.py' file is shadowing the real package
-if not hasattr(cv2, 'CascadeClassifier') or not hasattr(cv2, 'data'):
-    print("="*60)
-    print("CRITICAL ERROR: OpenCV (cv2) is not loaded correctly!")
-    print("You likely have a local file named 'cv2.py' in your project folder,")
-    print("which is preventing Python from loading the real OpenCV library.")
-    print("\nFIX: Rename or delete the local 'cv2.py' file, delete the __pycache__ folder, and restart.")
-    print("="*60)
-    sys.exit(1)
-
+import h5py
+import json
 # Suppress TensorFlow logs for cleaner UI
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.get_logger().setLevel('ERROR')
@@ -37,10 +30,6 @@ EMOTION_EMOJIS = {
 # Paths to models (Must match what you saved in training)
 MODEL_PATHS = {
     "Custom CNN (48x48 - Fastest)": "models/best_emotion_model.h5",
-    "MobileNetV2 (128x128 - Balanced)": "models/best_mobilenetv2_emotion.h5",
-    "VGG16 (128x128 - Heavy)": "models/best_vgg16_emotion.h5",
-    "ResNet50 (128x128 - Heavy)": "models/best_resnet50_emotion.h5",
-    "EfficientNetB0 (128x128 - Best Acc)": "models/best_efficientnetb0_emotion.h5"
 }
 
 # --- PAGE CONFIGURATION ---
@@ -87,6 +76,7 @@ st.markdown("""
 # --- HELPER FUNCTIONS ---
 
 @st.cache_resource(show_spinner="Loading AI Model... This might take a minute.")
+
 def load_model(model_name):
     """Loads the selected model and returns it along with its expected input shape."""
     path = MODEL_PATHS[model_name]
@@ -104,8 +94,10 @@ def load_model(model_name):
 def detect_and_crop_face(image_np):
     """Uses Haar Cascade to detect a face and crop it with padding."""
     gray = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    
+    face_cascade = cv2.CascadeClassifier('models/haarcascade_frontalface_default.xml')
+    if face_cascade.empty():
+        st.error("Failed to load Haar cascade file. Check that models/haarcascade_frontalface_default.xml exists.")
+        st.stop()
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
     
     if len(faces) > 0:
@@ -278,7 +270,7 @@ if input_image is not None:
                 showlegend=False,
                 plot_bgcolor='rgba(0,0,0,0)'
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 else:
     st.markdown("---")
     st.info("👆 Please upload an image or take a photo using the webcam to get started.")
