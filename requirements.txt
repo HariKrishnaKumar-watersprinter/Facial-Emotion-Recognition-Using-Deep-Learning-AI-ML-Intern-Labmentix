@@ -1,6 +1,9 @@
 streamlit
 tensorflow
-opencv-python
+tf_keras
+opencv-contrib-python-headless
+plotly
+pandas
 numpy
 Pillow
-plotly
+h5py
