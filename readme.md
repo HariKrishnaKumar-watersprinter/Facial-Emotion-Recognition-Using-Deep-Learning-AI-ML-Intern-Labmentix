@@ -29,12 +29,9 @@ Unlike standard FER implementations, this project implements advanced MLOps and 
 2.  **Crash-Proof "Chunked" Training Loop:**
     *   Replaces standard `model.fit()` to prevent Google Colab timeouts and session crashes.
     *   Processes data in chunks, provides live progress bars, and saves temporary weights every few minutes. If the kernel dies, you lose zero progress.
-3.  **High-Speed Transfer Learning Optimizations:**
-    *   Reduces pre-trained model input from 224x224 to **128x128** (75% pixel reduction).
-    *   Enables **Mixed Precision (FP16)** training for ~2x GPU speedup.
-    *   Multi-processing data loading to prevent GPU starvation.
-4.  **Multi-Model Architecture Comparison:**
-    *   Trains and compares 5 different architectures: Custom CNN, VGG16, ResNet50, MobileNetV2, and EfficientNetB0.
+
+4.  **Model Architecture Comparison:**
+    *   Trains Custom CNN
 5.  **Production Deployment:**
     *   Interactive **Streamlit Web App** with OpenCV Haar Cascade face detection and interactive Plotly charts.
 
@@ -109,9 +106,7 @@ The project outputs multiple models for different deployment scenarios:
 | Model | Input Size | Speed | Best Use Case |
 | :--- | :--- | :--- | :--- |
 | **Custom CNN** | 48x48 Grayscale | ⚡ Lightning Fast | Real-time webcam, CPU deployment, mobile apps. |
-| **MobileNetV2** | 128x128 RGB | 🏃 Fast | Edge devices (Raspberry Pi), mobile apps needing high accuracy. |
-| **EfficientNetB0** | 128x128 RGB | 🚶 Moderate | Server-side API where highest accuracy is required. |
-| **VGG16 / ResNet50** | 128x128 RGB | 🐢 Heavy | Baseline benchmarking, academic comparison. |
+
 
 ---
 
